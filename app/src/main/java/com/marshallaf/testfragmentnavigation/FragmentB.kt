@@ -11,11 +11,17 @@ import kotlinx.android.synthetic.main.fragment_b.*
 
 class FragmentB : Fragment() {
 
+    lateinit var navigationController: NavigationController
     lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ViewModelProviders.of(this).get(ViewModelB::class.java)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        navigationController = NavigationHolder.getNavigationController(this)
+        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,6 +30,6 @@ class FragmentB : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        button_to_fragment_a.setOnClickListener { view -> NavigationRetriever.getNavigationController(view).navigate(FragmentA()) }
+        button_to_fragment_a.setOnClickListener { view -> navigationController.navigate(FragmentA()) }
     }
 }
